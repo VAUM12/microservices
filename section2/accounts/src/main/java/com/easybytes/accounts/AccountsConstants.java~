@@ -1,0 +1,4 @@
+package com.easybytes.accounts;
+
+public class AccountsConstants {
+}
