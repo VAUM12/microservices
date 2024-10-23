@@ -1,5 +1,6 @@
 package com.easybytes.accounts.service.impl;
 
+import com.easybytes.accounts.constants.AccountsConstants;
 import com.easybytes.accounts.dto.AccountsDto;
 import com.easybytes.accounts.dto.CustomerDto;
 import com.easybytes.accounts.entity.Accounts;
@@ -76,12 +77,24 @@ public class AccountServiceImpl implements AccountService {
         return  isUpdated;
     }
 
+    @Override
+    public boolean deleteAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                ()-> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber)
+        );
+        accountsRepository.deleteByCustomerId(customer.getCustomerId());
+        customerRepository.delete(customer);
+        return true;
+    }
+
     private Accounts createNewAccount(Customer customer) {
         Accounts account = new Accounts();
         account.setCustomerId(customer.getCustomerId());
         long randomAccNumber=1000000000L+ new Random().nextInt(900000000);
         account.setAccountNumber(randomAccNumber);
-        account.setAccountType("Savings");
+        account.setAccountType(AccountsConstants.SAVINGS);
+        account.setBranchAddress(AccountsConstants.ADDRESS);
+
         return account;
     }
 }
