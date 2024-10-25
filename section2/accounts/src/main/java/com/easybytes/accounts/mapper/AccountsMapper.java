@@ -7,7 +7,7 @@ import jdk.dynalink.beans.StaticClass;
 public class AccountsMapper {
     public static AccountsDto accountsToAccountsDto(Accounts accounts, AccountsDto accountsDto){
         accountsDto.setAccountNumber(accounts.getAccountNumber());
-        accountsDto.setAccountType(accountsDto.getAccountType());
+        accountsDto.setAccountType(accounts.getAccountType());
         accountsDto.setBranchAddress(accounts.getBranchAddress());
         return accountsDto;
     }
